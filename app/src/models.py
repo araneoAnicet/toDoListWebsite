@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
-from flask import current_app
 
-sql_db = SQLAlchemy(current_app)
+
+sql_db = SQLAlchemy()
 
 projects = sql_db.Table(
     sql_db.Column('project_id', sql_db.Integer, sql_db.ForeignKey('project.id'), primary_key=True),
