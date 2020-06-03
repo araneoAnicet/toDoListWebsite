@@ -1,9 +1,19 @@
-from flask import Blueprint, jsonify
+from flask_restful import API, Resource
+from flask import current_app
 
-mod = Blueprint('api', __name__)
+api = API(current_app)
 
-@mod.route('/')
-def hello_wrold():
-    return jsonify({
-        'message': 'hello world!'
-    })
+class UserResource(Resource):
+    def get(self):
+        pass
+
+    def put(self):
+        pass
+
+    def delete(self):
+        pass
+
+    def post(self):
+        pass
+
+api.add_resource(UserResource, '/user')
