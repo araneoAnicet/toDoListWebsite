@@ -1,7 +1,12 @@
 from flask_restful import API, Resource
-from flask import current_app
+from flask import Blueprint
+from src.models import sql_db
 
-api = API(current_app)
+
+api_blueprint = Blueprint('api', __name__)
+api = API(api_blueprint)
+
+api.add_resource(UserResource, '/user')
 
 class UserResource(Resource):
     def get(self):
@@ -15,5 +20,3 @@ class UserResource(Resource):
 
     def post(self):
         pass
-
-api.add_resource(UserResource, '/user')
