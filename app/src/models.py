@@ -21,4 +21,5 @@ class Project(sql_db.Model):
     owner_id = sql_db.Column(sql_db.Integer, sql_db.ForeignKey('owner.id'), nullable=False)
 
     def __repr__(self):
-        return f'Project({self.name}::{self.owner.username})'
+        return f'Project({self.name}::{self.owner_id})'
+
