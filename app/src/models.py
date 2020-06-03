@@ -27,7 +27,19 @@ class Project(sql_db.Model):
     name = sql_db.Column(sql_db.String(90), unique=False, nullable=True)
     description = sql_db.Column(sql_db.String(360), unique=False, nullable=True)
     owner_id = sql_db.Column(sql_db.Integer, sql_db.ForeignKey('owner.id'), nullable=False)
+    tasts = sql_db.relationship('Task', backref='project', lazy=True)
 
     def __repr__(self):
         return f'Project({self.name}::{self.owner_id})'
 
+
+class Task(sql_db.Model):
+    id = sql_db.Column(sql_db.Integer, primary_key=True)
+    name = sql_db.Column(sql_db.String(90), unique=True, nullable=False)
+    description = sql_db.Column(sql_db.String(360), unique=False, nullable=True)
+    priority = sql_db.Column(sql_db.Integer, unique=False, nullable=False)
+    project_id = sql_db.Column(sql_db.Integer,
+        sql_db.ForeignKey('project.id'), nullable=False)
+
+    def __repr__(self):
+        return f'Task({self.name}::{self.description})'
