@@ -19,7 +19,7 @@ def json_response(status, message, data):
             'url': request.url,
             'method': request.method,
         }
-    }
+    }, status
 
 class UserResource(Resource):
     def get(self):
