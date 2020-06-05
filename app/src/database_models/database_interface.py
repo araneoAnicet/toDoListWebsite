@@ -5,10 +5,10 @@ class UserDatabaseInterface:
     def user_registration(self, username: str, email: str, password: str) -> None:
         pass
 
-    def user_login(self, email: str, password: str) -> None:
+    def user_login(self, email: str, password: str) -> bool:
         pass
 
-    def user_authentification(self, jwt_token: str) -> None:
+    def user_authentification(self, jwt_token: str) -> bool:
         pass
 
 
