@@ -1,13 +1,28 @@
 from flask_restful import Api, Resource
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, current_app
 from src.models import sql_db, User
 from flask_bcrypt import Bcrypt
 from werkzeug.security import safe_str_cmp
+import jwt
+import datetime
 
 
 api_blueprint = Blueprint('api', __name__)
 bcrypt = Bcrypt()
 api = Api(api_blueprint)
+
+def generate_jwt(username, email):
+    payload = {
+        'sub': {
+            'username': username,
+            'email': email
+        }
+    }
+    return str(jwt.encode(
+        payload,
+        current_app.config.get('SECRET_KEY'),
+        algorithm='HS256'
+    ), 'utf-8')
 
 def json_response(status, message, data):
     return {
@@ -46,7 +61,14 @@ class UserResource(Resource):
                     'username': user_data['username'],
                     'email': user_data['email']
                 }
-                return json_response(200, 'OK', {'user': response_user_data})
+                return json_response(
+                    200,
+                    'OK',
+                    {
+                        'user': response_user_data,
+                        'token': generate_jwt(response_user_data['username'], response_user_data['email'])
+                    }
+                )
             return json_response(401, 'Passwords should be equal', None)
         return json_response(401, 'This user already exists!', None)
 
