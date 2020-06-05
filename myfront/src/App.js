@@ -1,42 +1,19 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import './App.css';
+import './Components/App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootswatch/dist/lux/bootstrap.min.css"
+import Header from './Components/Header.js'
+import LoginForm from './Components/LoginForm';
 
 function App() {
   return (
     <div>
-        
-          <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+      <Header />
+      <LoginForm />
 
-        <div class="collapse navbar-collapse" id="navbarColor02">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Pricing</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="text" placeholder="Search"></input>
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </nav>
-
+{/*
       <form>
   <fieldset>
     <legend>Legend</legend>
@@ -59,6 +36,7 @@ function App() {
     <button type="submit" class="btn btn-primary">Submit</button>
   </fieldset>
 </form>
+*/}
 </div>
 
   )
