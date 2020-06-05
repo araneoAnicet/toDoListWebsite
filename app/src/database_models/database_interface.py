@@ -1,4 +1,10 @@
+from flask_bcrypt import Bcrypt
+
+
 class UserDatabaseInterface:
+    def set_bcrypt_object(self, bcrypt: Bcrypt) -> None:
+        self.bcrypt = Bcrypt
+
     def set_user_class(self, user_class_ref):
         self.user_class_ref = user_class_ref
 
