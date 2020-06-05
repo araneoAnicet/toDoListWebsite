@@ -11,6 +11,7 @@ projects = sql_db.Table(
 
 
 class User(sql_db.Model):
+    # sql database model
     id = sql_db.Column(sql_db.Integer, primary_key=True)
     username = sql_db.Column(sql_db.String(50), unique=False, nullable=False)
     email = sql_db.Column(sql_db.String(90), unique=True, nullable=False)
@@ -24,6 +25,7 @@ class User(sql_db.Model):
 
 
 class Project(sql_db.Model):
+    # sql database model
     id = sql_db.Column(sql_db.Integer, primary_key=True)
     name = sql_db.Column(sql_db.String(90), unique=False, nullable=True)
     description = sql_db.Column(sql_db.String(360), unique=False, nullable=True)
@@ -35,6 +37,7 @@ class Project(sql_db.Model):
 
 
 class Task(sql_db.Model):
+    # sql database model
     id = sql_db.Column(sql_db.Integer, primary_key=True)
     name = sql_db.Column(sql_db.String(90), unique=True, nullable=False)
     description = sql_db.Column(sql_db.String(360), unique=False, nullable=True)
