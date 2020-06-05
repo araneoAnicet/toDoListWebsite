@@ -1,4 +1,5 @@
 from flask_bcrypt import Bcrypt
+import jwt
 
 
 class UserDatabaseInterface:
