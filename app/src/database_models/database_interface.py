@@ -8,6 +8,9 @@ class UserDatabaseInterface:
     def user_login(self, email: str, password: str) -> None:
         pass
 
+    def user_authentification(self, jwt_token: str) -> None:
+        pass
+
 
 class ProjectDatabaseInterface:
     def set_project_class(self, project_class_ref):
