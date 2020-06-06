@@ -1,8 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 from src.database_models.user_editor import UserEditor
 from src.database_models.project_editor import ProjectEditor
+from src.database_models.task_editor import TaskEditor
 from src.database_models.user_interface import UserInterface
 from src.database_models.project_interface import ProjectInterface
+from src.database_models.task_interface import TaskInterface
 
 
 sql_db = SQLAlchemy()
@@ -73,6 +75,20 @@ class Task(sql_db.Model):
     priority = sql_db.Column(sql_db.Integer, unique=False, nullable=False)
     project_id = sql_db.Column(sql_db.Integer,
         sql_db.ForeignKey('project.id'), nullable=False)
+
+    def apply_changes(self):
+        new_name = self.edit.get_name()
+        new_description = self.edit.get_description()
+        new_priority = self.edit.get_priority()
+
+        if new_name:
+            self.name = new_name
+        if new_description:
+            self.description = new_description
+        if new_priority:
+            self.priority = new_priority
+
+        self.db.session.commit()
 
     def __repr__(self):
         return f'Task({self.name}::{self.description})'
