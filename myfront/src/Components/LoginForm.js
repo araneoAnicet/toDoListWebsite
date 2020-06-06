@@ -1,5 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-unused-expressions */
 import React,{ Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
