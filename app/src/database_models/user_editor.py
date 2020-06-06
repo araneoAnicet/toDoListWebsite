@@ -1,5 +1,5 @@
 class UserEditor:
-    def __init__(self, name=None, email=None, password=None) -> None:
+    def __init__(self, name: str = None, email: str = None, password: str = None) -> None:
         self.name = name
         self.email = email
         self.password = password
