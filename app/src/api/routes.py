@@ -38,7 +38,25 @@ def json_response(status, message, data):
 
 class UserResource(Resource):
     def get(self):
-        pass
+        # sign in
+        user_data = {
+            'email': request.form.get('email'),
+            'password': request.form.get('password')
+        }
+        searched_user = sql_db.get_user(user_data['email'])
+        if searched_user:
+            if bcrypt.check_password_hash(searched_user.password, user_data['password']):
+                return json_response(200, 'OK', {
+                    'user': {
+                        'email': user_data['email']
+                    },
+                    'token': generate_jwt(searched_user.username, user_data['email'])
+                })
+        return json_response(401, 'Incorrect e-mail or password', {
+            'user': {
+                'email': user_data['email']
+            }
+        })
 
     def post(self):
         # registration
@@ -48,15 +66,14 @@ class UserResource(Resource):
             'password': request.form.get('password'),
             'repeat_password': request.form.get('repeat_password')
         }
-        if not User.query.filter_by(email=user_data['email']).first():
+        if not sql_db.get_user(user_data['email']):
             if safe_str_cmp(user_data['password'], user_data['repeat_password']):
                 new_user = User(
                     username=user_data['username'],
                     email=user_data['email'],
                     password=str(bcrypt.generate_password_hash(user_data['password']), 'utf-8')
                 )
-                sql_db.session.add(new_user)
-                sql_db.session.commit()
+                sql_db.add_user(new_user)
                 response_user_data = {
                     'username': user_data['username'],
                     'email': user_data['email']
