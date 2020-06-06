@@ -92,3 +92,5 @@ class Task(sql_db.Model):
 
     def __repr__(self):
         return f'Task({self.name}::{self.description})'
+
+sql_db.set_class_references(User, Project, Task)
