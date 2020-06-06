@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
+from src.database_models.sql_database import SQLDatabase
 from src.database_models.user_editor import UserEditor
 from src.database_models.project_editor import ProjectEditor
 from src.database_models.task_editor import TaskEditor
@@ -7,7 +7,7 @@ from src.database_models.project_interface import ProjectInterface
 from src.database_models.task_interface import TaskInterface
 
 
-sql_db = SQLAlchemy()
+sql_db = SQLDatabase()
 
 projects = sql_db.Table(
     'projects',
