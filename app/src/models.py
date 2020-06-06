@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from src.database_models.user_editor import UserEditor
+from src.database_models.user_interface import UserInterface
 
 
 sql_db = SQLAlchemy()
@@ -10,7 +12,7 @@ projects = sql_db.Table(
 )
 
 
-class User(sql_db.Model):
+class User(sql_db.Model, UserInterface):
     # sql database model
     id = sql_db.Column(sql_db.Integer, primary_key=True)
     username = sql_db.Column(sql_db.String(50), unique=False, nullable=False)
@@ -20,6 +22,20 @@ class User(sql_db.Model):
     member_projects = sql_db.relationship('Project', secondary=projects, lazy='subquery',
         backref=sql_db.backref('members', lazy=True))
 
+    def apply_changes(self):
+        new_name = self.edit.get_name()
+        new_email = self.edit.get_email()
+        new_password = self.edit.get_password()
+        
+        if new_name:
+            self.username = new_name
+        if new_email:
+            self.email = new_email
+        if new_password:
+            self.password = new_password
+
+        self.db.session.commit()
+
     def __repr__(self):
         return f'User({self.id}::{self.username}::{self.email})'
 
@@ -27,7 +43,7 @@ class User(sql_db.Model):
 class Project(sql_db.Model):
     # sql database model
     id = sql_db.Column(sql_db.Integer, primary_key=True)
-    name = sql_db.Column(sql_db.String(90), unique=False, nullable=True)
+    name = sql_db.Column(sql_db.String(90), unique=False, nullable=False)
     description = sql_db.Column(sql_db.String(360), unique=False, nullable=True)
     owner_id = sql_db.Column(sql_db.Integer, sql_db.ForeignKey('user.id'), nullable=False)
     tasks = sql_db.relationship('Task', backref='project', lazy=True)
