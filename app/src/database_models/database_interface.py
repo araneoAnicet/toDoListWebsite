@@ -13,7 +13,7 @@ class DatabaseInterface:
     def delete_user(self, user):
         pass
 
-    def get_project(self, user, project_name: str):
+    def get_project(self, user, project_name: str), project_status: str:  # ownership or membership
         pass
 
     def add_project(self, user, project):

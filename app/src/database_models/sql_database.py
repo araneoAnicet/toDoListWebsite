@@ -14,10 +14,17 @@ class SQLDatabase(SQLAlchemy, DatabaseInterface):
         self.session.delete(user)
         self.session.commit()
 
-    def get_project(self, user, project_name: str):
-        return user.query.join(
-            user.owned_projects,
-            alliased=True
+    def get_project(self, user, project_name: str, project_status: str):
+        # project status: 'ownership' / 'membership'
+        if project_status == 'ownership':
+            return user.query.join(
+                user.owned_projects,
+                alliased=True
+                ).filter_by(name=project_name).first()
+        elif project_status == 'membership':
+            return user.query.join(
+                user.member_projects,
+                alliased=True
             ).filter_by(name=project_name).first()
     
     def add_project(self, user, project):
