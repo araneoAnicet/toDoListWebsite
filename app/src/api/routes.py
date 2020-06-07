@@ -18,11 +18,14 @@ def generate_jwt(username, email):
             'email': email
         }
     }
-    return str(jwt.encode(
+    return jwt.encode(
         payload,
         current_app.config.get('SECRET_KEY'),
         algorithm='HS256'
-    ), 'utf-8')
+    )
+
+def decode_jwt(token):
+    return jwt.decode(token, current_app.config.get('SECRET_KEY'), algorithm='HS256')
 
 def json_response(status, message, data):
     return {
