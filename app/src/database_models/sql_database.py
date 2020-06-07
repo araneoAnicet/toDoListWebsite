@@ -10,6 +10,10 @@ class SQLDatabase(SQLAlchemy, DatabaseInterface):
         self.session.add(user)
         self.session.commit()
 
+    def delete_user(self, user):
+        self.session.delete(user)
+        self.session.commit()
+
     def get_project(self, user, project_name: str):
         return user.query.join(
             user.owned_projects,
@@ -20,6 +24,10 @@ class SQLDatabase(SQLAlchemy, DatabaseInterface):
         project.owner = user
         self.session.commit()
 
+    def delete_project(self, project):
+        self.session.delete(project)
+        self.session.commit()
+
     def get_task(self, project, task_name: str):
         return project.query.join(
             project.tasks,
@@ -28,4 +36,8 @@ class SQLDatabase(SQLAlchemy, DatabaseInterface):
 
     def add_task(self, project, task):
         project.tasks.append(task)
+        self.session.commit()
+
+    def delete_task(self, task):
+        self.session.delete(task)
         self.session.commit()
