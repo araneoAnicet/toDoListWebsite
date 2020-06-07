@@ -10,14 +10,23 @@ class DatabaseInterface:
     def add_user(self, user):
         pass
 
+    def delete_user(self, user):
+        pass
+
     def get_project(self, user, project_name: str):
         pass
 
     def add_project(self, user, project):
         pass
 
+    def delete_project(self, project):
+        pass
+
     def get_task(self, project, task_name: str):
         pass
 
     def add_task(self, project, task):
+        pass
+
+    def delete_task(self, task):
         pass
