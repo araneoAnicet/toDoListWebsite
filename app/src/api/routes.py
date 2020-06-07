@@ -1,6 +1,7 @@
 from flask_restful import Api, Resource
 from flask import Blueprint, jsonify, request, current_app
 from src.models import sql_db, User
+from src.database_models.user_editor import UserEditor
 from flask_bcrypt import Bcrypt
 from werkzeug.security import safe_str_cmp
 import jwt
@@ -93,7 +94,35 @@ class UserResource(Resource):
         return json_response(401, 'This user already exists!', None)
 
     def put(self):
-        pass
+        payload = decode_jwt(request.headers.get('token'))['sub']
+        searched_user = sql_db.get_user(payload['email'])
+        if searched_user:
+            searched_user.set_db(sql_db)
+            searched_user.set_changes(UserEditor(
+                name=request.form.get('name'),
+                email=request.form.get('email'),
+                password=str(bcrypt.generate_password_hash(request.form.get('password')), 'utf-8')
+                ))
+            searched_user.apply_changes()
+            return json_response(200, 'OK', {
+                'user': {
+                    'before': {
+                        'name': payload['name'],
+                        'email': payload['email'],
+                    },
+                    'changes': {
+                        'name': request.form.get('name'),
+                        'email': request.form.get('email'),
+                        'password_length': len(request.form.get('password'))
+                    }
+                }
+            })
+        return json_response(410, 'User does not exist', {
+            'user': {
+                'name': payload['name'],
+                'email': payload['email']
+            }
+        })
 
     def delete(self):
         pass
