@@ -12,10 +12,10 @@ api_blueprint = Blueprint('api', __name__)
 bcrypt = Bcrypt()
 api = Api(api_blueprint)
 
-def generate_jwt(username, email):
+def generate_jwt(name, email):
     payload = {
         'sub': {
-            'username': username,
+            'name': name,
             'email': email
         }
     }
