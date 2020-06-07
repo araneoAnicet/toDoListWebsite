@@ -125,8 +125,23 @@ class UserResource(Resource):
         })
 
     def delete(self):
-        pass
-
+        payload = decode_jwt(request.headers.get('token'))['sub']
+        searched_user = sql_db.get_user(payload['email'])
+        if searched_user:
+            user_data = {
+                'name': searched_user.username,
+                'email': searched_user.email
+            }
+            sql_db.delete_user(searched_user)
+            return json_response(200, 'OK', {
+                'user': user_data
+            })
+        return json_response(410, 'User does not exist', {
+            'user': {
+                'name': payload['name'],
+                'email': payload['email']
+            }
+        })
 
 @api_blueprint.route('/test')
 def test():
