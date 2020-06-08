@@ -3,7 +3,7 @@ from flask import Blueprint, jsonify, request, current_app
 from src.models import sql_db, User
 from src.database_models.user_editor import UserEditor
 from src.api.resources.user import UserResource
-from flask_bcrypt import Bcrypt
+from src.api.resources import bcrypt
 from werkzeug.security import safe_str_cmp
 import jwt
 
