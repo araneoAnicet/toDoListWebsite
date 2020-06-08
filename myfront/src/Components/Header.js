@@ -21,7 +21,7 @@ export default class Header extends Component {
                             placeholder="Search"
                             className="mr-sm-2"
                             />
-                            <Button variant="outline-info">Search</Button>
+                            <button type="button" className="btn btn-primary">Search</button>
                         </Form>
                     </Navbar.Collapse>
                 </Container>
