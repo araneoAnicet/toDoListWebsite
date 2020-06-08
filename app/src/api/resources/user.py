@@ -20,7 +20,7 @@ class UserResource(Resource):
                     'user': {
                         'email': user_data['email']
                     },
-                    'token': generate_jwt(searched_user.username, user_data['email'])
+                    'token': generate_jwt(searched_user.username, user_data['email']).decode('utf-8')
                 })
         return json_response(401, 'Incorrect e-mail or password', {
             'user': {
@@ -41,7 +41,7 @@ class UserResource(Resource):
                 new_user = User(
                     username=user_data['username'],
                     email=user_data['email'],
-                    password=str(bcrypt.generate_password_hash(user_data['password']), 'utf-8')
+                    password=bcrypt.generate_password_hash(user_data['password'])
                 )
                 sql_db.add_user(new_user)
                 response_user_data = {
@@ -53,7 +53,7 @@ class UserResource(Resource):
                     'OK',
                     {
                         'user': response_user_data,
-                        'token': generate_jwt(response_user_data['username'], response_user_data['email'])
+                        'token': generate_jwt(response_user_data['username'], response_user_data['email']).decode('utf-8')
                     }
                 )
             return json_response(401, 'Passwords should be equal', None)
@@ -67,7 +67,7 @@ class UserResource(Resource):
             searched_user.set_changes(UserEditor(
                 name=request.form.get('name'),
                 email=request.form.get('email'),
-                password=str(bcrypt.generate_password_hash(request.form.get('password')), 'utf-8')
+                password=bcrypt.generate_password_hash(request.form.get('password'))
                 ))
             searched_user.apply_changes()
             return json_response(200, 'OK', {
